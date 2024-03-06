@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -21,6 +23,18 @@
                         <h3>PHP image CRUD - insert image</h3>
                     </div>
                     <div class="card-body">
+                        <?php
+                        if (isset($_SESSION['status']) && $_SESSION != '') {
+                        ?>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong>Hey!</strong> <?php echo $_SESSION['status'];  ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        <?php
+                            unset($_SESSION['status']);
+                        }
+                        ?>
+
                         <form action="code.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="">Student Name</label>
@@ -35,11 +49,11 @@
                                 <input type="text" name="stu_phone" class="form-control" required placeholder="Enter phone number">
                             </div>
                             <div class="form-group">
-                                <label for="">Student Name</label>
+                                <label for="">Student Emage</label>
                                 <input type="file" name="stu_image" class="form-control" required>
                             </div>
                             <div class="form-group py-3">
-                                <button name=" required" class="btn btn-primary">Submit</button>
+                                <button name="save_stu_image" class=" btn btn-primary">Submit</button>
                             </div>
                         </form>
                     </div>
