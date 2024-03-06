@@ -1,3 +1,5 @@
+<?php session_start() ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -22,11 +24,22 @@
           </div>
           <div class="card-body ">
             <?php
-            $conn = mysqli_connect("localhost", "root", "", "php_image_crud");
-            $query = "SELECT * FROM student" ;
-            $query_run = mysqli_query($conn, $query);
-         
+            if (isset($_SESSION['status']) && $_SESSION != '') {
             ?>
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Hey!</strong> <?php echo $_SESSION['status'];  ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <?php
+              unset($_SESSION['status']);
+            }
+            ?>
+            <?php
+            $conn = mysqli_connect("localhost", "root", "", "php_image_crud");
+            $query = "SELECT * FROM student";
+            $query_run = mysqli_query($conn, $query);
+            ?>
+
             <table class="table table-responsive">
               <thead>
                 <tr>
@@ -40,40 +53,38 @@
                 </tr>
               </thead>
               <tbody>
-              <?php
-                if(mysqli_num_rows($query_run) > 0)    //record is there or not
+                <?php
+                if (mysqli_num_rows($query_run) > 0)    //record is there or not
                 {
-                  foreach($query_run as $row )
-                  {
-                    ?>
-                      <tr>
-                        <td><?php echo $row['id'] ?></td>
-                        <td><?php echo $row['stu_name'] ?></td>
-                        <td><?php echo $row['stu_class'] ?></td>
-                        <td><?php echo $row['stu_phone'] ?></td>
-                        <td>
-                          <img src="<?php echo "upload/" .$row['stu_image'] ?>" width="100px" height="80px" alt="image">
-                        </td>
-                        <td>
-                            <a href="edit.php?id=<?php echo $row['id'] ?>" class="btn btn-info ">Edit</a>
-                        </td>
-                        <td>
-                            <a href="" class="btn btn-danger">Delete</a>
-                        </td>
-                      </tr>
-                    <?php
-                  }
-
-                }else{
-                  ?>
+                  foreach ($query_run as $row) {
+                ?>
                     <tr>
-                      <td>No record available!</td>
+                      <td><?php echo $row['id'] ?></td>
+                      <td><?php echo $row['stu_name'] ?></td>
+                      <td><?php echo $row['stu_class'] ?></td>
+                      <td><?php echo $row['stu_phone'] ?></td>
+                      <td>
+                        <img src="<?php echo "upload/" . $row['stu_image'] ?>" width="100px" height="80px" alt="image">
+                      </td>
+                      <td>
+                        <a href="edit.php?id=<?php echo $row['id'] ?>" class="btn btn-info ">Edit</a>
+                      </td>
+                      <td>
+                        <a href="" class="btn btn-danger">Delete</a>
+                      </td>
                     </tr>
                   <?php
+                  }
+                } else {
+                  ?>
+                  <tr>
+                    <td>No record available!</td>
+                  </tr>
+                <?php
                 }
-              ?>
+                ?>
               </tbody>
-             
+
             </table>
           </div>
         </div>

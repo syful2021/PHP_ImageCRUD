@@ -2,7 +2,6 @@
 session_start();
 $conn = mysqli_connect('localhost', 'root', '', 'php_image_crud');
 
-
 if (isset($_POST['save_stu_image'])) {
     $name = $_POST['stu_name'];
     $class = $_POST['stu_class'];
@@ -33,6 +32,51 @@ if (isset($_POST['save_stu_image'])) {
                 $_SESSION['status'] = "Data Not stored...!";
                 header('location: create.php');
             }
+        }
+    }
+}
+// Update part
+
+if (isset($_POST['update_stu_image'])) {
+
+    $stu_id = $_POST['stu_id'];
+    $name = $_POST['stu_name'];
+    $class = $_POST['stu_class'];
+    $phone = $_POST['stu_phone'];
+
+    $new_image = $_FILES['stu_image']['name'];
+    $old_image = $_POST['stu_old_img'];
+
+    if ($new_image != '') {
+        $update_filename =  $new_image;
+    } else {
+        $update_filename = $old_image;
+    }
+    if ( $new_image != '') 
+    {
+        if (file_exists("upload/" . $new_image))
+        {
+            $filename = $image;
+            $_SESSION['status'] = "Image already Exist...!!" . $filename;
+            header("location: index.php");
+        }
+        $filename = $image;
+        $_SESSION['status'] = "Image already Exist...!!" . $filename;
+        header("location: index.php");
+    } else {
+        $query = "UPDATE student SET stu_name='$name', stu_class='$class', stu_phone='$phone', stu_image='$update_filename' WHERE id='$stu_id' ";
+        $query_run = mysqli_query($conn, $query);
+
+        if ($query_run) {
+            if ($new_image != '') {
+                move_uploaded_file($_FILES["stu_image"]["tmp_name"], "upload/" . $new_image);
+                unlink("upload/" . $old_image);
+            }
+            $_SESSION['status'] = "Data Updated successfully.";
+            header('location: index.php');
+        } else {
+            $_SESSION['status'] = "Data Not Updated successfully....!!";
+            header('location: index.php');
         }
     }
 }

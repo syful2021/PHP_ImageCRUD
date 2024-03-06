@@ -26,32 +26,33 @@
                         <?php
                         $conn = mysqli_connect("localhost", "root", "", "php_image_crud");
                         $id = $_GET['id'];
-                        $query = "SELECT * FROM student WHERE id = '$id' ";
+                        $query = "SELECT * FROM student WHERE id ='$id' ";
                         $query_run = mysqli_query($conn, $query);
 
                         if (mysqli_num_rows($query_run) > 0) {
                             foreach ($query_run as $row) {
-                                
+
                         ?>
                                 <form action="code.php" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" name="stu_id" value="<?php echo $row['id'];?>" >
+                                    <input type="hidden" name="stu_id" value="<?php echo $row['id']; ?>">
 
                                     <div class="form-group">
                                         <label for="">Student Name</label>
-                                        <input type="text" name="stu_name" value="<?php echo $row['stu_name'];?>" class="form-control" required placeholder="Enter name">
+                                        <input type="text" name="stu_name" value="<?php echo $row['stu_name']; ?>" class="form-control" required placeholder="Enter name">
                                     </div>
                                     <div class="form-group">
                                         <label for="">Student Class</label>
-                                        <input type="text" name="stu_class" value="<?php echo $row['stu_class'];?>" class="form-control" required placeholder="Enter class">
+                                        <input type="text" name="stu_class" value="<?php echo $row['stu_class']; ?>" class="form-control" required placeholder="Enter class">
                                     </div>
                                     <div class="form-group">
                                         <label for="">Student Phone</label>
-                                        <input type="text" name="stu_phone" value="<?php echo $row['stu_phone'];?>" class="form-control" required placeholder="Enter phone number">
+                                        <input type="text" name="stu_phone" value="<?php echo $row['stu_phone']; ?>" class="form-control" required placeholder="Enter phone number">
                                     </div>
                                     <div class="form-group">
                                         <label for="">Student Image</label>
-                                        <input type="file" name="stu_image" class="form-control" required>
-                                        <input type="hidden" name="stu_old_img" value="<?php echo $row['stu_image'];?>"  >
+                                        <input type="file" name="stu_image" class="form-control">
+                                        <input type="hidden" name="stu_old_img" value="<?php echo $row['stu_image']; ?>">
+                                        <img src="<?php echo "upload/" . $row['stu_image'] ?>" width="100px;" height="80px;" alt="">
                                     </div>
                                     <div class="form-group py-3 ">
                                         <button name="update_stu_image" class=" btn btn-primary">Update</button>
@@ -61,7 +62,7 @@
                         <?php
                             }
                         } else {
-                            echo "No record availabel";
+                            echo "No record available";
                         }
 
                         ?>

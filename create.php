@@ -54,6 +54,7 @@
                             </div>
                             <div class="form-group py-3">
                                 <button name="save_stu_image" class=" btn btn-primary">Submit</button>
+                                <button class=" btn btn-dark "><a href="index.php" class="text-decoration-none text-white">Back</a></button>
                             </div>
                         </form>
                     </div>
