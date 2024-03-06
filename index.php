@@ -14,7 +14,7 @@
 
 <body>
   <div class="container py-5">
-    <div class="row">
+    <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header bg-success ">
@@ -27,7 +27,7 @@
             $query_run = mysqli_query($conn, $query);
          
             ?>
-            <table class="table">
+            <table class="table table-responsive">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -55,7 +55,7 @@
                           <img src="<?php echo "upload/" .$row['stu_image'] ?>" width="100px" height="80px" alt="image">
                         </td>
                         <td>
-                            <a href="" class="btn btn-info ">Edit</a>
+                            <a href="edit.php?id=<?php echo $row['id'] ?>" class="btn btn-info ">Edit</a>
                         </td>
                         <td>
                             <a href="" class="btn btn-danger">Delete</a>
