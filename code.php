@@ -10,7 +10,15 @@
         $phone = $_POST['stu_phone'];
         $image = $_FILES['stu_image']['name'];
 
-        $query = "INSERT INTO student (stu_name, stu_class, stu_phone, stu_image) VALUES ('$name', '$class', '$phone', '$image')";
+        // not mendatory
+        if(file_exists("upload/".$image))
+        {
+            $filename = $image;
+            $_SESSION['status'] = "Image already Exist...!!" . $filename ;
+            header("location: create.php");
+        }
+        else{
+            $query = "INSERT INTO student (stu_name, stu_class, stu_phone, stu_image) VALUES ('$name', '$class', '$phone', '$image')";
         $query_run = mysqli_query($conn, $query) ;
 
         if($query_run)
@@ -24,6 +32,8 @@
             $_SESSION['status'] = "Data Not stored...!";
             header('location: create.php');
         }
+        }
+
     }
 
 ?>
