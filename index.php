@@ -64,13 +64,17 @@
                       <td><?php echo $row['stu_class'] ?></td>
                       <td><?php echo $row['stu_phone'] ?></td>
                       <td>
-                        <img src="<?php echo "upload/" . $row['stu_image'] ?>" width="100px" height="80px" alt="image">
+                        <img src="<?php echo "upload/".$row['stu_image'] ?>" width="100px" height="80px" alt="image">
                       </td>
                       <td>
                         <a href="edit.php?id=<?php echo $row['id'] ?>" class="btn btn-info ">Edit</a>
                       </td>
                       <td>
-                        <a href="" class="btn btn-danger">Delete</a>
+                        <form action="code.php" method="POST">
+                             <input type="hidden" name="delete_id" value="<?php echo $row['id'] ?>">
+                             <input type="hidden" name="del_stu_image" value="<?php echo $row['stu_image'] ?>">
+                             <button type="submit" name="delete_stu_img" class="btn btn-danger">Delete</button>
+                        </form>
                       </td>
                     </tr>
                   <?php

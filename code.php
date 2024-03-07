@@ -8,7 +8,7 @@ if (isset($_POST['save_stu_image'])) {
     $phone = $_POST['stu_phone'];
     $image = $_FILES['stu_image']['name'];
 
-    $allowed_extension = array('gif', 'png', 'jpg', 'jpeg', 'pdf');
+    $allowed_extension = array('gif', 'png', 'PNG', 'jpg', 'jpeg', 'pdf');
     $filename = $image;
     $file_extension = pathinfo($filename, PATHINFO_EXTENSION);
     if (!in_array($file_extension, $allowed_extension)) {
@@ -52,10 +52,8 @@ if (isset($_POST['update_stu_image'])) {
     } else {
         $update_filename = $old_image;
     }
-    if ( $new_image != '') 
-    {
-        if (file_exists("upload/" . $new_image))
-        {
+    if ($new_image != '') {
+        if (file_exists("upload/" . $new_image)) {
             $filename = $image;
             $_SESSION['status'] = "Image already Exist...!!" . $filename;
             header("location: index.php");
@@ -78,5 +76,25 @@ if (isset($_POST['update_stu_image'])) {
             $_SESSION['status'] = "Data Not Updated successfully....!!";
             header('location: index.php');
         }
+    }
+}
+
+// Delete part
+
+if (isset($_POST['delete_stu_img'])) {
+    $id = $_POST['delete_id'];
+    $stu_image = $_POST['del_stu_image'];
+
+    $query = "DELETE FROM student WHERE id='$id' ";
+    $query_run = mysqli_query($conn, $query);
+
+    if ($query_run) {
+
+        unlink("upload/" .$stu_image);
+        $_SESSION['status'] = "Data Delete successfully!";
+        header('location: index.php');
+    } else {
+        $_SESSION['status'] = "Data Not Delete successfully....!!";
+        header('location: index.php');
     }
 }
