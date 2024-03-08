@@ -43,6 +43,9 @@
             <table class="table table-responsive">
               <thead>
                 <tr>
+                  <a class="btn btn-info text-decoration-none" href="create.php">Add Data</a>
+                </tr>
+                <tr>
                   <th>ID</th>
                   <th>Name</th>
                   <th>Class</th>
@@ -64,16 +67,16 @@
                       <td><?php echo $row['stu_class'] ?></td>
                       <td><?php echo $row['stu_phone'] ?></td>
                       <td>
-                        <img src="<?php echo "upload/".$row['stu_image'] ?>" width="100px" height="80px" alt="image">
+                        <img src="<?php echo "upload/" . $row['stu_image'] ?>" width="100px" height="80px" alt="image">
                       </td>
                       <td>
                         <a href="edit.php?id=<?php echo $row['id'] ?>" class="btn btn-info ">Edit</a>
                       </td>
                       <td>
                         <form action="code.php" method="POST">
-                             <input type="hidden" name="delete_id" value="<?php echo $row['id'] ?>">
-                             <input type="hidden" name="del_stu_image" value="<?php echo $row['stu_image'] ?>">
-                             <button type="submit" name="delete_stu_img" class="btn btn-danger">Delete</button>
+                          <input type="hidden" name="delete_id" value="<?php echo $row['id'] ?>">
+                          <input type="hidden" name="del_stu_image" value="<?php echo $row['stu_image'] ?>">
+                          <button type="submit" name="delete_stu_img" class="btn btn-danger">Delete</button>
                         </form>
                       </td>
                     </tr>
