@@ -2,17 +2,17 @@
 session_start();
 $conn = mysqli_connect('localhost', 'root', '', 'php_image_crud');
 
-        // data insert part
-        
+// data insert part
+
 if (isset($_POST['save_stu_image'])) {
     $name = $_POST['stu_name'];
     $class = $_POST['stu_class'];
     $phone = $_POST['stu_phone'];
     $image = $_FILES['stu_image']['name'];
 
-    $random = rand(000,999);
+    $random = rand(000, 999);
     $random = str_pad($random, 3, '0', STR_PAD_LEFT);
-    $image = $random.$image;
+    $image = $random . $image;
     $tmp_name = $_FILES["stu_image"]["tmp_name"];
 
     $allowed_extension = array('gif', 'png', 'PNG', 'jpg', 'jpeg', 'pdf');
@@ -22,26 +22,18 @@ if (isset($_POST['save_stu_image'])) {
         $_SESSION['status'] = "Allowed extension only => 'gif', 'png', 'jpg', 'jpeg', 'pdf'";
         header('location: create.php');
     } else {
-        // not mendatory file exists
+        $query = "INSERT INTO student (stu_name, stu_class, stu_phone, stu_image) VALUES ('$name', '$class', '$phone', '$image')";
+        $query_run = mysqli_query($conn, $query);
 
-        // if (file_exists("upload/" . $image)) {
-        //     $filename = $image;
-        //     $_SESSION['status'] = "Image already Exist...!!" . $filename;
-        //     header("location: create.php");
-        // } else {
-            $query = "INSERT INTO student (stu_name, stu_class, stu_phone, stu_image) VALUES ('$name', '$class', '$phone', '$image')";
-            $query_run = mysqli_query($conn, $query);
-
-            if ($query_run) {
-                move_uploaded_file($tmp_name, "upload/" . $image);
-                $_SESSION['status'] = "Data stored successfully";
-                header('location: create.php');
-            } else {
-                $_SESSION['status'] = "Data Not stored...!";
-                header('location: create.php');
-            }
+        if ($query_run) {
+            move_uploaded_file($tmp_name, "upload/" . $image);
+            $_SESSION['status'] = "Data stored successfully";
+            header('location: create.php');
+        } else {
+            $_SESSION['status'] = "Data Not stored...!";
+            header('location: create.php');
         }
-    // }
+    }
 }
 // Update part
 
@@ -55,9 +47,9 @@ if (isset($_POST['update_stu_image'])) {
     $new_image = $_FILES['stu_image']['name'];
     $old_image = $_POST['stu_old_img'];
 
-    $random = rand(000,999);
+    $random = rand(000, 999);
     $random = str_pad($random, 3, '0', STR_PAD_LEFT);
-    $new_image = $random.$new_image;
+    $new_image = $random . $new_image;
     $tmp_name = $_FILES["stu_image"]["tmp_name"];
 
     if ($new_image != '') {
@@ -70,7 +62,7 @@ if (isset($_POST['update_stu_image'])) {
 
     if ($query_run) {
         if ($new_image != '') {
-            move_uploaded_file($_FILES["stu_image"]["tmp_name"], "upload/" . $new_image);
+            move_uploaded_file($tmp_name, "upload/" . $new_image);
             unlink("upload/" . $old_image);
         }
         $_SESSION['status'] = "Data Updated successfully.";
@@ -79,7 +71,6 @@ if (isset($_POST['update_stu_image'])) {
         $_SESSION['status'] = "Data Not Updated successfully....!!";
         header('location: index.php');
     }
-    
 }
 
 // Delete part
@@ -93,7 +84,7 @@ if (isset($_POST['delete_stu_img'])) {
 
     if ($query_run) {
 
-        unlink("upload/" .$stu_image);
+        unlink("upload/" . $stu_image);
         $_SESSION['status'] = "Data Delete successfully!";
         header('location: index.php');
     } else {
